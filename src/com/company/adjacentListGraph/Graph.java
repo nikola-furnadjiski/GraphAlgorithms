@@ -33,4 +33,24 @@ public class Graph<E> {
     public void deleteEdge(int x, int y) {
         adjList[x].removeNeighbor(adjList[y]);
     }
+
+    public void dfsSearch(int node) {
+        boolean visited[] = new boolean[numNodes];
+        for(int i=0; i<numNodes; i++) {
+            visited[i] = false;
+        }
+        dfsRecursive(node, visited);
+    }
+
+    private void dfsRecursive(int node, boolean[] visited) {
+        visited[node] = true;
+        System.out.println(node + ": " + adjList[node].info);
+
+        for(int i=0; i<adjList[node].neighbors.size(); i++) {
+            GraphNode<E> pom = adjList[node].neighbors.get(i);
+            if(!visited[pom.index]) {
+                dfsRecursive(pom.index, visited);
+            }
+        }
+    }
 }
