@@ -8,7 +8,6 @@ public class BFS {
         int[] di = {0, 0, -1, 1};
         int[] dj = {-1, 1, 0, 0};
 
-
         int N=maze.length;
         int M=maze[0].length;
 
@@ -26,7 +25,6 @@ public class BFS {
                 if(maze[i][j] == 'S') {
                     si=i;
                     sj=j;
-                    mat[i][j] = 0;
                 } else if (maze[i][j] == 'E') {
                     ei=i;
                     ej=j;
@@ -38,26 +36,24 @@ public class BFS {
         Queue<Integer> qj = new LinkedList<>();
         qi.add(si);
         qj.add(sj);
-        boolean stop = false;
-        while(!qi.isEmpty() && !stop) {
+        mat[si][sj] = 0;
+        while(!qi.isEmpty()) {
 
             int ii = qi.poll();
             int jj = qj.poll();
 
             for(int i=0; i<di.length; i++) {
-                if(ii+di[i] >= 0 && ii+di[i] < N && jj+dj[i] >= 0 && jj+dj[i] < M && maze[ ii+di[i] ][ jj+dj[i] ] != '#') {
-                    if(mat[ii][jj] + 1 < mat[ ii+di[i] ][ jj+dj[i] ] || mat[ ii+di[i] ][ jj+dj[i] ] == -1) {
-                        mat[ii+di[i]][jj+dj[i]] = mat[ii][jj] + 1;
-                        qi.add(ii+di[i]);
-                        qj.add(jj+dj[i]);
-                        if(ii+di[i] == ei && jj+dj[i] == ej) {
-                            stop = true;
-                        }
-                    }
+                int newi = ii + di[i];
+                int newj = jj + dj[i];
+                if(newi >= 0 && newi < N && newj >= 0 && newj < M && maze[newi][newj] != '#' && mat[newi][newj] == -1) {
+                        mat[newi][newj] = mat[ii][jj] + 1;
+                        qi.add(newi);
+                        qj.add(newj);
                 }
             }
         }
 
+        //just for printing the maze, not part of the algorithm
         for(int i=0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 if(mat[i][j] < 9 && mat[i][j] != -1) {
