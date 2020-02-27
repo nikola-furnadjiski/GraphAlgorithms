@@ -1,4 +1,6 @@
-package com.company.listWeightedDirectedGraph;
+package com.company.adjacentListWeightedDirectedGraph;
+
+import java.util.Stack;
 
 public class Graph<E> {
     private int numNodes;
@@ -57,6 +59,62 @@ public class Graph<E> {
         }
     }
 
+    public void dfsNonRecursive(int node) {
+        boolean[] visited = new boolean[numNodes];
+        for(int i=0; i<numNodes; i++)
+            visited[i] = false;
+
+        System.out.println(node+": "+adjList[node].getInfo());
+        visited[node] = true;
+
+        Stack<GraphNode<E>> s = new Stack<>();
+        s.push(adjList[node]);
+
+        GraphNode<E> pom = null;
+
+        while(!s.isEmpty()) {
+            pom = s.peek();
+            GraphNode<E> tmp = null;
+
+            for(int i=0; i<pom.getNeighbors().size(); i++) {
+                tmp = pom.getNeighbors().get(i).getNode();
+                if(!visited[tmp.getIndex()]) {
+                    break;
+                }
+            }
+            if(tmp != null && !visited[tmp.getIndex()]) {
+                System.out.println(tmp.getIndex()+": "+tmp.getInfo());
+                visited[tmp.getIndex()] = true;
+                s.push(tmp);
+            } else {
+                s.pop();
+            }
+        }
+    }
+
+    public void bfs(int node) {
+        boolean[] visited = new boolean[numNodes];
+        for(int i=0; i<numNodes; i++)
+            visited[i] = false;
+
+        System.out.println(node+": "+adjList[node].getInfo());
+        visited[node] = true;
+        Queue<GraphNode<E>> q = new LinkedQueue<>();
+        q.enqueue(adjList[node]);
+
+        GraphNode<E> pom = null;
+        while(!q.isEmpty()) {
+            pom = q.dequeue();
+            for(int i=0; i<pom.getNeighbors().size(); i++) {
+                GraphNode<E> tmp = pom.getNeighbors().get(i).getNode();
+                if(!visited[tmp.getIndex()]) {
+                    System.out.println(tmp.getIndex()+": "+tmp.getInfo());
+                    visited[tmp.getIndex()] = true;
+                    q.enqueue(tmp);
+                }
+            }
+        }
+    }
 
     @Override
     public String toString() {

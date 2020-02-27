@@ -1,4 +1,4 @@
-package com.company.listWeightedDirectedGraph;
+package com.company.adjacentListWeightedDirectedGraph;
 
 /**
  *  Sekoj sosed na jazol se sostoi od jazol i tezhina na rebroto

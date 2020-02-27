@@ -1,4 +1,4 @@
-package com.company.listWeightedDirectedGraph;
+package com.company.adjacentListWeightedDirectedGraph;
 
 public interface Queue<E> {
 
